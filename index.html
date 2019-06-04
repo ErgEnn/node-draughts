@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkers</title>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="app.js"></script>
+</head>
+<body>
+    <div id="newGameModal" class="modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kabe</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <button id="newGameBtn" type="button" class="btn btn-primary btn-block">Uus mäng</button>
+                    </div>
+                    <div class="form-group">
+                        <input id="gameIdInput" name="gameId" class="form-control" placeholder="Mängu ID">
+                        <button id="joinGameBtn" type="button" class="btn btn-secondary btn-block" disabled>Liitu mänguga</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="waitingOtherModal" class="modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ootan teist mängijat</h5>
+                </div>
+                <div class="modal-body">
+                    Anna teisele mängijale see mängu id:<br>
+                    <input class="form-control" id="gameId" readonly></input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gameOverModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mäng läbi</h5>
+                </div>
+                <div class="modal-body">
+                    Võitis: <h5 id="winnerLabel"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pyro hidden">
+        <div class="before"></div>
+        <div class="after"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                <div id="graveyard-white" class="square white"></div>
+            </div>
+            <div class="col-10">
+                <div id="gameTable">
+
+                    <div id="white-cell-0" class="square white"></div>
+                    <div id="black-cell-1" class="square black"><div draggable="true" id="black-checker-0" class="checker black"></div></div>
+                    <div id="white-cell-2" class="square white"></div>
+                    <div id="black-cell-3" class="square black"><div draggable="true" id="black-checker-1" class="checker black"></div></div>
+                    <div id="white-cell-4" class="square white"></div>
+                    <div id="black-cell-5" class="square black"><div draggable="true" id="black-checker-2" class="checker black"></div></div>
+                    <div id="white-cell-6" class="square white"></div>
+                    <div id="black-cell-7" class="square black"><div draggable="true" id="black-checker-3" class="checker black"></div></div>
+
+                    <div id="black-cell-8" class="square black"><div draggable="true" id="black-checker-4" class="checker black"></div></div>
+                    <div id="white-cell-9" class="square white"></div>
+                    <div id="black-cell-10" class="square black"><div draggable="true" id="black-checker-5" class="checker black"></div></div>
+                    <div id="white-cell-11" class="square white"></div>
+                    <div id="black-cell-12" class="square black"><div draggable="true" id="black-checker-6" class="checker black"></div></div>
+                    <div id="white-cell-13" class="square white"></div>
+                    <div id="black-cell-14" class="square black"><div draggable="true" id="black-checker-7" class="checker black"></div></div>
+                    <div id="white-cell-15" class="square white"></div>
+
+                    <div id="white-cell-16" class="square white"></div>
+                    <div id="black-cell-17" class="square black"><div draggable="true" id="black-checker-8" class="checker black"></div></div>
+                    <div id="white-cell-18" class="square white"></div>
+                    <div id="black-cell-19" class="square black"><div draggable="true" id="black-checker-9" class="checker black"></div></div>
+                    <div id="white-cell-20" class="square white"></div>
+                    <div id="black-cell-21" class="square black"><div draggable="true" id="black-checker-10" class="checker black"></div></div>
+                    <div id="white-cell-22" class="square white"></div>
+                    <div id="black-cell-23" class="square black"><div draggable="true" id="black-checker-11" class="checker black"></div></div>
+
+                    <div id="black-cell-24" class="square black"></div>
+                    <div id="white-cell-25" class="square white"></div>
+                    <div id="black-cell-26" class="square black"></div>
+                    <div id="white-cell-27" class="square white"></div>
+                    <div id="black-cell-28" class="square black"></div>
+                    <div id="white-cell-29" class="square white"></div>
+                    <div id="black-cell-30" class="square black"></div>
+                    <div id="white-cell-31" class="square white"></div>
+
+                    <div id="white-cell-32" class="square white"></div>
+                    <div id="black-cell-33" class="square black"></div>
+                    <div id="white-cell-34" class="square white"></div>
+                    <div id="black-cell-35" class="square black"></div>
+                    <div id="white-cell-36" class="square white"></div>
+                    <div id="black-cell-37" class="square black"></div>
+                    <div id="white-cell-38" class="square white"></div>
+                    <div id="black-cell-39" class="square black"></div>
+
+                    <div id="black-cell-40" class="square black"><div draggable="true" id="white-checker-0" class="checker white"></div></div>
+                    <div id="white-cell-41" class="square white"></div>
+                    <div id="black-cell-42" class="square black"><div draggable="true" id="white-checker-1" class="checker white"></div></div>
+                    <div id="white-cell-43" class="square white"></div>
+                    <div id="black-cell-44" class="square black"><div draggable="true" id="white-checker-2" class="checker white"></div></div>
+                    <div id="white-cell-45" class="square white"></div>
+                    <div id="black-cell-46" class="square black"><div draggable="true" id="white-checker-3" class="checker white"></div></div>
+                    <div id="white-cell-47" class="square white"></div>
+
+                    <div id="white-cell-48" class="square white"></div>
+                    <div id="black-cell-49" class="square black"><div draggable="true" id="white-checker-4" class="checker white"></div></div>
+                    <div id="white-cell-50" class="square white"></div>
+                    <div id="black-cell-51" class="square black"><div draggable="true" id="white-checker-5" class="checker white"></div></div>
+                    <div id="white-cell-52" class="square white"></div>
+                    <div id="black-cell-53" class="square black"><div draggable="true" id="white-checker-6" class="checker white"></div></div>
+                    <div id="white-cell-54" class="square white"></div>
+                    <div id="black-cell-55" class="square black"><div draggable="true" id="white-checker-7" class="checker white"></div></div>
+
+                    <div id="black-cell-56" class="square black"><div draggable="true" id="white-checker-8" class="checker white"></div></div>
+                    <div id="white-cell-57" class="square white"></div>
+                    <div id="black-cell-58" class="square black"><div draggable="true" id="white-checker-9" class="checker white"></div></div>
+                    <div id="white-cell-59" class="square white"></div>
+                    <div id="black-cell-60" class="square black"><div draggable="true" id="white-checker-10" class="checker white"></div></div>
+                    <div id="white-cell-61" class="square white"></div>
+                    <div id="black-cell-62" class="square black"><div draggable="true" id="white-checker-11" class="checker white"></div></div>
+                    <div id="white-cell-63" class="square white"></div>
+
+                    <div id="status"><span id="yourColor"></span> | <span id="turnInfo"></span></div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div id="graveyard-black" class="square white"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
